@@ -13,20 +13,24 @@ repositories {
 }
 
 ext {
-    set('springCloudGcpVersion', "2.0.0")
+    set('springCloudGcpVersion', "2.0.3")
     set('springCloudVersion', "2020.0.2")
+    set('springBootVersion', "2.5.3")
 }
 
 dependencies {
     implementation 'com.google.cloud:spring-cloud-gcp-starter-pubsub'
     implementation 'com.google.cloud:spring-cloud-gcp-starter-logging'
     implementation 'com.google.cloud:spring-cloud-gcp-starter-trace'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
 
     compileOnly 'org.projectlombok:lombok:1.18.20'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+    testImplementation "org.testcontainers:testcontainers:1.16.0"
+    testImplementation "org.testcontainers:junit-jupiter:1.16.0"
+    testImplementation "org.testcontainers:gcloud:1.16.0"
 }
 
 dependencyManagement {
