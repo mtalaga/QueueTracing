@@ -1,5 +1,6 @@
 package pl.mt.receiver.pubsub;
 
+import com.google.api.core.ApiService;
 import com.google.cloud.pubsub.v1.MessageReceiver;
 import com.google.cloud.pubsub.v1.Subscriber;
 import com.google.common.util.concurrent.MoreExecutors;
@@ -9,11 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import pl.mt.receiver.receiver.MessageHandler;
 
 @Slf4j
-public class PubSubSubscription {
+class PubSubSubscription {
 
     private final MessageHandler messageHandler;
 
-    public PubSubSubscription(PubSubProperties properties, MessageHandler messageHandler) {
+    protected PubSubSubscription(PubSubProperties properties, MessageHandler messageHandler) {
         this.messageHandler = messageHandler;
         initializeSubscription(properties);
     }
@@ -32,7 +33,7 @@ public class PubSubSubscription {
 
         subscriber.addListener(new Subscriber.Listener() {
             @Override
-            public void failed(Subscriber.State from, Throwable failure) {
+            public void failed(ApiService.State from, Throwable failure) {
                 log.error("Error when receiving message {}", failure.toString());
             }
         }, MoreExecutors.directExecutor());

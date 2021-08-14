@@ -1,9 +1,10 @@
-package pl.mt.receiver;
+package pl.mt.receiver.receiver;
 
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.system.CapturedOutput;
+import pl.mt.receiver.ReceiverServiceBaseTest;
 
 import java.util.UUID;
 

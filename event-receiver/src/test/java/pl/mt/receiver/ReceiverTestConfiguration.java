@@ -17,8 +17,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import pl.mt.receiver.pubsub.PubSubProperties;
-import pl.mt.receiver.pubsub.PubSubSubscription;
-import pl.mt.receiver.receiver.MessageHandler;
 
 import java.io.IOException;
 
@@ -51,12 +49,11 @@ public class ReceiverTestConfiguration {
 
     @Bean
     @Primary
-    public PubSubSubscription pubSubTestSubscription(@Value("${receiver.projectid}") String projectId, @Value("${receiver.subscriptionid}") String subscriptionId, MessageHandler messageHandler) {
+    public PubSubProperties testPubSubProperties(@Value("${receiver.projectid}") String projectId, @Value("${receiver.subscriptionid}") String subscriptionId) {
         ManagedChannel channel = ManagedChannelBuilder.forTarget(pubSubEmulatorContainer.getEmulatorEndpoint()).usePlaintext().build();
         TransportChannelProvider channelProvider =
                 FixedTransportChannelProvider.create(GrpcTransportChannel.create(channel));
 
-        var properties = PubSubProperties.create(projectId, subscriptionId, channelProvider, NoCredentialsProvider.create());
-        return new PubSubSubscription(properties, messageHandler);
+        return PubSubProperties.create(projectId, subscriptionId, channelProvider, NoCredentialsProvider.create());
     }
 }

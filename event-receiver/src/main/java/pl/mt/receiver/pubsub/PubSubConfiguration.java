@@ -9,8 +9,12 @@ import pl.mt.receiver.receiver.MessageHandler;
 public class PubSubConfiguration {
 
     @Bean
-    public PubSubSubscription pubSubSubscription(@Value("${receiver.projectid}") String projectId, @Value("${receiver.subscriptionid}") String subscriptionName, MessageHandler messageHandler) {
-        var properties = PubSubProperties.createWithDefaults(projectId, subscriptionName);
+    public PubSubProperties pubSubProperties(@Value("${receiver.projectid}") String projectId, @Value("${receiver.subscriptionid}") String subscriptionName) {
+        return PubSubProperties.createWithDefaults(projectId, subscriptionName);
+    }
+
+    @Bean
+    public PubSubSubscription pubSubSubscription(PubSubProperties properties, MessageHandler messageHandler) {
         return new PubSubSubscription(properties, messageHandler);
     }
 
